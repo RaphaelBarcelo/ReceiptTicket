@@ -1,8 +1,8 @@
-# taxi_receipt.py
+# output_to_pdf.py
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 
-def print_receipt_pdf(output_filename, receipt_data):
+def print_receipt_pdf(output_filename, receipt_data, confidential_info):
     # Set up the canvas
     c = canvas.Canvas(output_filename, pagesize=A4)
     width, height = A4
@@ -17,10 +17,10 @@ def print_receipt_pdf(output_filename, receipt_data):
     c.drawString(margin_x, start_y, "NOTE DE TAXI")
     c.drawString(margin_x, start_y - line_height, "- DUPLICATA -")
 
-    # Confidential information placeholders
-    c.drawString(margin_x, start_y - 3 * line_height, f"Mr {receipt_data.client_name}")
-    c.drawString(margin_x, start_y - 4 * line_height, f"Immatricule: {receipt_data.immatricule}")
-    c.drawString(margin_x, start_y - 5 * line_height, f"Stat. n\u00b0: {receipt_data.stat_number}")
+    # Confidential information placeholders (only used when printing)
+    c.drawString(margin_x, start_y - 3 * line_height, f"Mr {confidential_info.driver_name}")
+    c.drawString(margin_x, start_y - 4 * line_height, f"Immatricule: {confidential_info.immatricule}")
+    c.drawString(margin_x, start_y - 5 * line_height, f"Stat. n\u00b0: {confidential_info.stat_number}")
     c.drawString(margin_x, start_y - 6 * line_height, f"Client: {receipt_data.client_id}")
 
     # Lieu depart/arrivee

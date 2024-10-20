@@ -1,39 +1,28 @@
 # main.py
-from output_to_pdf import print_receipt_pdf
-from receipt_data import ReceiptData
+import os
 
-# Create an instance of ReceiptData with the required values
-receipt_data = ReceiptData(
-    client_name='John Doe',
+from confidential_information import ConfidentialInformation
+from input_from_excel import ExcelInputReader
+from output_to_pdf import print_receipt_pdf
+
+# Create an instance of ConfidentialInformation
+confidential_info = ConfidentialInformation(
+    driver_name='John Doe',
     immatricule='XYZ1234',
-    stat_number='STAT5678',
-    client_id='CLIENT91011',
-    departure_location='123 Main St',
-    arrival_location='456 Elm St',
-    start_date='12-10-2024',
-    start_time='15h56',
-    end_date='12-10-2024',
-    end_time='16h56',
-    base_fare='2.12',
-    tariff_a='17.00',
-    tariff_a_time='24.27',
-    tariff_a_price='9.40',
-    tariff_a_distance='6.6',
-    tariff_a_distance_price='7.40',
-    tariff_c_time='2.49',
-    tariff_c_price='1.00',
-    tariff_c_distance='19.0',
-    tariff_c_distance_price='43.20',
-    total_price='63.32',
-    total_ttc='63.32',
-    tva_rate='10.00%',
-    tva_amount='5.76',
-    minimum_fare='7.30',
-    contestation_address_1="DDPP de l'AISNE",
-    contestation_address_2='ESPACE SYMBIOSE',
-    contestation_address_3='80 rue Pierre-Gilles de Gennes',
-    contestation_address_4='02000 BARENTON BUGNY'
+    stat_number='STAT5678'
 )
 
+# Get the directory where main.py is located
+current_directory = os.path.dirname(os.path.abspath(__file__))
+
+# Specify the path to the Excel file (absolute path)
+excel_file_path = os.path.join(current_directory, 'receipt_data.xlsx')
+
+# Create an instance of ExcelInputReader
+reader = ExcelInputReader(excel_file_path)
+
+# Read data from Excel
+receipt_data = reader.read_data()
+
 # Create the receipt PDF
-print_receipt_pdf("taxi_receipt.pdf", receipt_data)
+print_receipt_pdf("taxi_receipt.pdf", receipt_data, confidential_info)

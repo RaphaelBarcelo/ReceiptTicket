@@ -1,17 +1,18 @@
+# output_to_esc_pos.py
 from escpos.printer import Usb
 
 # Set up the USB connection (adjust with your printer's vendor_id and product_id)
 p = Usb(0x04b8, 0x0e15)  # Example values for Epson printers
 
-def print_receipt_esc_pos(receipt_data):
+def print_receipt_esc_pos(receipt_data, confidential_info):
     # Print the receipt header
     p.text("NOTE DE TAXI\n")
     p.text("- DUPLICATA -\n\n")
 
-    # Print confidential info
-    p.text(f"Mr {receipt_data.client_name}\n")
-    p.text(f"Immatricule: {receipt_data.immatricule}\n")
-    p.text(f"Stat. n°: {receipt_data.stat_number}\n")
+    # Print confidential info (only accessed when printing)
+    p.text(f"Mr {confidential_info.driver_name}\n")
+    p.text(f"Immatricule: {confidential_info.immatricule}\n")
+    p.text(f"Stat. n°: {confidential_info.stat_number}\n")
     p.text(f"Client: {receipt_data.client_id}\n\n")
 
     # Print departure and arrival locations

@@ -1,11 +1,10 @@
 # receipt_data.py
 
+from confidential_information import ConfidentialInformation
+
 class ReceiptData:
     def __init__(
         self,
-        client_name,
-        immatricule,
-        stat_number,
         client_id,
         departure_location,
         arrival_location,
@@ -33,9 +32,6 @@ class ReceiptData:
         contestation_address_3,
         contestation_address_4
     ):
-        self.client_name = client_name
-        self.immatricule = immatricule
-        self.stat_number = stat_number
         self.client_id = client_id
         self.departure_location = departure_location
         self.arrival_location = arrival_location
